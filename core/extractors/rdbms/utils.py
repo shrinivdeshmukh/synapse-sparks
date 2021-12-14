@@ -1,0 +1,1 @@
+allowed_databases = ['mysql', 'postgres', 'sqlite']

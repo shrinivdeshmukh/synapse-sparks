@@ -1,0 +1,69 @@
+source: rdbms/mysql
+
+tables:
+
+  authors:
+    columns:
+      - name: id
+        type: integer
+
+      - name: first_name
+        type: varchar
+
+      - name: last_name
+        type: varchar
+
+      - name: email
+        type: varchar
+
+      - name: birthdate
+        type: varchar
+
+      - name: added
+        type: varchar
+
+  posts:
+    columns:
+      - name: id
+        type: integer
+
+      - name: author_id
+        type: integer
+ 
+      - name: title
+        type: varchar
+
+      - name: description
+        type: varchar
+
+      - name: content
+        type: text
+
+      - name: date
+        type: varchar
+
+reader:
+  table: posts
+  columns: []
+  conditions:
+    where: author_id IN (1,2,3,4,5,6)
+
+transformations:
+  join:
+    table: true
+    select: []
+    from: authors
+    column: id
+    with: author_id
+    index: false
+    how: left
+
+  writer:
+    output_path: 'output/bookstore.json'
+    format: json
+    index: false
+    orient: table
+
+transformations_order:
+  - join
+  - writer
